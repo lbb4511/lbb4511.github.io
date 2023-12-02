@@ -16,9 +16,9 @@ import (
 var logger = gulu.Log.NewLogger(os.Stdout)
 
 const (
-	githubUserName = "lbb4511"
+	githubUserName     = "lbb4511"
 	githubRepositories = "lbb4511.github.io"
-	hacpaiUserName = "lbb4511"
+	hacpaiUserName     = "lbb4511"
 )
 
 func main() {
@@ -39,8 +39,6 @@ func home(path string) {
 	}
 	buf := &bytes.Buffer{}
 	buf.WriteString("\n\n")
-	cstSh, _ := time.LoadLocation("Asia/Shanghai")
-	updated := time.Now().In(cstSh).Format("2006-01-02 15:04:05")
 	buf.WriteString("📝 帖子 &nbsp; 💬 评论 &nbsp; 🗣 回帖 &nbsp; 🌙 清月 &nbsp; 👨‍💻 用户 &nbsp; 🏷️ 标签 &nbsp; ⭐️ 关注 &nbsp; 👍 赞同 &nbsp; 💗 感谢 &nbsp; 💰 打赏 &nbsp; 🗃 收藏\n\n")
 	for _, event := range result["data"].([]interface{}) {
 		evt := event.(map[string]interface{})
