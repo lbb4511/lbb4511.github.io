@@ -17,19 +17,20 @@ var logger = gulu.Log.NewLogger(os.Stdout)
 
 const (
 	githubUserName = "lbb4511"
+	githubRepositories = "lbb4511.github.io"
 	hacpaiUserName = "lbb4511"
 )
 
 func main() {
-	upfile("home.md")
+	home("home.md")
 }
 
-func upfile(path string) {
+func home(path string) {
 
 	result := map[string]interface{}{}
 	response, data, errors := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
 		Get("https://hacpai.com/api/v2/user/"+hacpaiUserName+"/events?size=8").Timeout(7*time.Second).
-		Set("User-Agent", "Profile Bot; +https://github.com/"+githubUserName+"/"+githubUserName).EndStruct(&result)
+		Set("User-Agent", "Profile Bot; +https://github.com/"+githubUserName+"/"+githubRepositories).EndStruct(&result)
 	if nil != errors || http.StatusOK != response.StatusCode {
 		logger.Fatalf("fetch events failed: %+v, %s", errors, data)
 	}
@@ -40,7 +41,7 @@ func upfile(path string) {
 	buf.WriteString("\n\n")
 	cstSh, _ := time.LoadLocation("Asia/Shanghai")
 	updated := time.Now().In(cstSh).Format("2006-01-02 15:04:05")
-	buf.WriteString("### 我的近期动态\n\n⭐️ Star [个人主页](https://github.com/" + githubUserName + "/" + githubUserName + ") 后会自动更新，最近更新时间：`" + updated + "`\n\n📝 帖子 &nbsp; 💬 评论 &nbsp; 🗣 回帖 &nbsp; 🌙 清月 &nbsp; 👨‍💻 用户 &nbsp; 🏷️ 标签 &nbsp; ⭐️ 关注 &nbsp; 👍 赞同 &nbsp; 💗 感谢 &nbsp; 💰 打赏 &nbsp; 🗃 收藏\n\n")
+	buf.WriteString("📝 帖子 &nbsp; 💬 评论 &nbsp; 🗣 回帖 &nbsp; 🌙 清月 &nbsp; 👨‍💻 用户 &nbsp; 🏷️ 标签 &nbsp; ⭐️ 关注 &nbsp; 👍 赞同 &nbsp; 💗 感谢 &nbsp; 💰 打赏 &nbsp; 🗃 收藏\n\n")
 	for _, event := range result["data"].([]interface{}) {
 		evt := event.(map[string]interface{})
 		operation := evt["operation"].(string)
